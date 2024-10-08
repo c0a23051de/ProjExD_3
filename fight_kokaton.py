@@ -164,7 +164,6 @@ class Score:
 
 
 
-
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
@@ -172,6 +171,7 @@ def main():
     bird = Bird((300, 200))
     score = Score()
     beam = None
+    beam_list =[]
     # bomb = Bomb((255, 0, 0), 10)
     bombs = [Bomb((255, 0, 0), 10) for _ in range(NUM_OF_BOMBS)]
 
@@ -182,6 +182,8 @@ def main():
             if event.type == pg.QUIT:
                 return
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
+                new_beam = Beam()  # Create a new Beam instance
+                beam_list.append(new_beam)
                 # スペースキー押下でBeamクラスのインスタンス生成
                 beam = Beam(bird)            
         screen.blit(bg_img, [0, 0])
@@ -202,6 +204,7 @@ def main():
                     bird.change_img(6, screen)
                     score.score += 1  # スコアを1点加算
                     pg.display.update()
+                    
         bombs = [bomb for bomb in bombs if bomb is not None]
 
         key_lst = pg.key.get_pressed()
